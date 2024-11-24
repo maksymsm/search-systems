@@ -5,7 +5,8 @@ from contextual_module import contextual_search
 def cli_interface(news_data):
     print("Welcome to the News Search System!")
 
-    user_history = []  # Initialize history for contextual search
+    user_history = []
+    user_location = ''
 
     while True:
         mode = input("\nChoose search mode (1: Basic, 2: Contextual, 'exit' to quit): ").strip()
@@ -13,12 +14,15 @@ def cli_interface(news_data):
             print("\nThank you for using the system. Goodbye!")
             break
         
+        if mode == '2':
+            if user_location == '':
+                user_location = input("\nEnter your location (e.g., Київ, Львів, Одеса): ").strip()
+            
         query = input("\nEnter your search query: ").strip()
 
         if mode == '1':
             results = basic_search(query, news_data)
         elif mode == '2':
-            user_location = input("\nEnter your location (e.g., Київ, Львів, Одеса): ").strip()
             current_date = datetime.now()
             results = contextual_search(query, news_data, user_history, user_location, current_date)
             user_history.append(query)  # Add query to history
